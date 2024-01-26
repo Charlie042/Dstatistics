@@ -46,7 +46,7 @@ class statistics {
 
     }
 
-    //central 
+    //Measures of Dispersion 
 
     // Range 
     forRange(){
@@ -61,6 +61,23 @@ class statistics {
         const squaredDifferences = this.number.map(value => (value - mean) ** 2);
         return squaredDifferences.reduce((acc, value) => acc + value, 0) / this.number.length;
     }
+      // Standard Deviation
+  forStandardDeviation() {
+    return Math.sqrt(this.forVariance());
+  }
+  // Quartiles
+  forQuartiles() {
+    const sortedData = this.number.slice().sort((a, b) => a - b);
+    const midIndex = Math.floor(sortedData.length / 2);
+
+    const lowerHalf = sortedData.slice(0, midIndex);
+    const upperHalf = sortedData.slice(midIndex);
+
+    const lowerQuartile = this.forMedian(lowerHalf);
+    const upperQuartile = this.forMedian(upperHalf);
+
+    return { lowerQuartile, upperQuartile };
+  }
 }
 const number = [1,2,3,4,5,6,6];
 
@@ -69,3 +86,7 @@ const stats = new statistics(number);
 console.log('mean:', stats.forMean());
 console.log('median:', stats.forMedian());
 console.log('mode:', stats.forMode());
+console.log('Range:', stats.forRange());
+console.log('Variance:', stats.forVariance());
+console.log('standard derviation:', stats.forStandardDeviation());
+console.log('Quartiles:', stats.forQuartiles)
